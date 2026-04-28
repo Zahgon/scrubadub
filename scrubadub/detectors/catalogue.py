@@ -6,10 +6,12 @@ from typing import Type, Optional, Union, TYPE_CHECKING
 if TYPE_CHECKING:
     from scrubadub.detectors import Detector
 
-detector_catalogue = catalogue.create('scrubadub', 'detectors', entry_points=True)
+detector_catalogue = catalogue.create("scrubadub", "detectors", entry_points=True)
 
 
-def register_detector(detector: Type['Detector'], *, autoload: Optional[bool] = None) -> Type['Detector']:
+def register_detector(
+    detector: Type["Detector"], *, autoload: Optional[bool] = None
+) -> Type["Detector"]:
     """Register a detector for use with the ``Scrubber`` class.
 
     You can use ``register_detector(NewDetector, autoload=True)`` after your detector definition to automatically
@@ -30,10 +32,18 @@ def register_detector(detector: Type['Detector'], *, autoload: Optional[bool] = 
     :param autoload: Whether to automatically load this ``Detector`` on ``Scrubber`` initialisation.
     :type autoload: Optional[bool]
     """
-    pass
+    if not inspect.isclass(detector):
+        raise ValueError("detector should be a class, not an instance.")
+
+    if autoload is not None:
+        detector.autoload = autoload
+
+    detector_catalogue.register(detector.name, func=detector)
+
+    return detector
 
 
-def remove_detector(detector: Union[Type['Detector'], str]):
+def remove_detector(detector: Union[Type["Detector"], str]):
     """Remove an already registered detector.
 
     .. code:: pycon
