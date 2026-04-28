@@ -15,6 +15,4 @@ class PostalCodeFilth(Filth):
         :return: An example of this ``Filth``
         :rtype: str
         """
-        # for en_US I expect we should pick between .zipcode() and .zipcode_plus4()
-        # as postcode() for en_US only returns the 5 number zip code
-        return faker.postcode()
+        pass

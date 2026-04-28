@@ -81,7 +81,7 @@ class FilthReplacer(PostProcessor):
     @classmethod
     def reset_lookup(cls):
         """Reset the lookups that maintain a map of filth to a numeric ID."""
-        cls.typed_lookup = defaultdict(lambda: utils.Lookup(), {})
+        pass
 
     def filth_label(self, filth: Filth) -> str:
         """This function takes a filth and creates a label that can be used to replace the original text.
@@ -92,41 +92,7 @@ class FilthReplacer(PostProcessor):
         :rtype: str
 
         """
-        filths = [filth]
-        if isinstance(filth, MergedFilth):
-            filths = filth.filths
-
-        replacements = set()
-        for f in filths:
-            replacement_pieces = []
-
-            if self.include_type:
-                filth_type = getattr(f, 'type', None)
-                if filth_type is None:
-                    continue
-                if filth_type == TaggedEvaluationFilth.type:
-                    filth_comparison_type = getattr(f, 'comparison_type', None)
-                    if filth_comparison_type is not None:
-                        filth_type += '_' + filth_comparison_type
-                filth_type = filth_type.replace(' ', '_')
-
-                replacement_pieces.append(filth_type)
-
-            if self.include_count:
-                replacement_pieces.append(str(FilthReplacer.typed_lookup[filth_type][f.text.lower()]))
-
-            if self.include_hash:
-                replacement_pieces.append(FilthReplacer.get_hash(f.text.lower(), self.hash_salt, self.hash_length))
-
-            if len(replacement_pieces) == 0:
-                replacement_pieces = ['filth']
-
-            replacements.add('-'.join(replacement_pieces))
-
-        label = self.separator.join(sorted(replacements))
-        if self.uppercase:
-            label = label.upper()
-        return label
+        pass
 
     @staticmethod
     def get_hash(text: str, salt: bytes, length: int) -> str:
@@ -141,13 +107,7 @@ class FilthReplacer(PostProcessor):
         :return: The hash of the text
         :rtype: str
         """
-        return hashlib.pbkdf2_hmac(
-            hash_name='sha256',
-            password=text.encode('utf8'),
-            salt=salt,
-            iterations=100000,
-            dklen=math.ceil(length / 2),
-        ).hex()[:length]
+        pass
 
     def process_filth(self, filth_list: Sequence[Filth]) -> Sequence[Filth]:
         """Processes the filth to replace the original text
@@ -157,10 +117,7 @@ class FilthReplacer(PostProcessor):
         :return: The processed filths
         :rtype: Sequence[Filth]
         """
-        for filth_item in filth_list:
-            filth_item.replacement_string = self.filth_label(filth=filth_item)
-
-        return filth_list
+        pass
 
 
 register_post_processor(FilthReplacer)

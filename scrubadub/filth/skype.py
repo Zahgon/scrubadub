@@ -16,7 +16,4 @@ class SkypeFilth(Filth):
         :return: An example of this ``Filth``
         :rtype: str
         """
-        username = ''
-        while len(username) < 5:
-            username = re.sub(r'(^[^a-zA-Z])|[^a-zA-Z0-9_\-\,\.]', '', faker.user_name())[:31]
-        return username
+        pass

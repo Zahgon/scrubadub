@@ -8,7 +8,7 @@ class ScrubadubException(Exception):
         self.issues_url = 'http://github.com/LeapBeyond/scrubadub/issues'
 
     def render(self, msg):
-        return msg % vars(self)
+        pass
 
 
 class UnicodeRequired(ScrubadubException):

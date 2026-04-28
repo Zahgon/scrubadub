@@ -61,53 +61,26 @@ class Filth(object):
 
     @property
     def placeholder(self) -> str:
-        return self.type.upper()
+        pass
 
     @property
     def identifier(self) -> str:
         # NOTE: this is not an efficient way to store this in memory. could
         # alternatively hash the type and text and do away with the overhead
         # bits of storing the tuple in the lookup
-        i = self.lookup[(self.type, self.text.lower())]
-        return u'%s-%d' % (self.placeholder, i)
+        pass
 
     def replace_with(self, replace_with: str = 'placeholder', **kwargs) -> str:
-        warnings.warn(
-            "Filth.replace_with() will be removed in favour of using the more general PostProcessors",
-            DeprecationWarning
-        )
-        if self.prefix != '{{' or self.suffix != '}}':
-            warnings.warn(
-                "Setting prefixes and suffixes with scrubadub.filth.Filth.prefix or scrubadub.filth.Filth.suffix "
-                "is depreciated in favour of using the PrefixSuffixReplacer",
-                DeprecationWarning
-            )
-
-        if replace_with == 'placeholder':
-            return self.prefix + self.placeholder + self.suffix
-        # elif replace_with == 'surrogate':
-        #     raise NotImplementedError
-        elif replace_with == 'identifier':
-            return self.prefix + self.identifier + self.suffix
-        else:
-            raise exceptions.InvalidReplaceWith(replace_with)
+        pass
 
     def merge(self, other_filth: 'Filth') -> 'MergedFilth':
-        return MergedFilth(self, other_filth)
+        pass
 
     def __repr__(self) -> str:
         return self._to_string()
 
     def _to_string(self, attributes: Optional[List[str]] = None) -> str:
-        if attributes is None:
-            attributes = ['text', 'document_name', 'beg', 'end', 'comparison_type', 'detector_name', 'locale']
-
-        item_attributes = [
-            "{}={}".format(item, getattr(self, item, None).__repr__())
-            for item in attributes
-            if getattr(self, item, None) is not None
-        ]
-        return "<{} {}>".format(self.__class__.__name__, " ".join(item_attributes))
+        pass
 
     def __eq__(self, other) -> bool:
         """Only test equality on a subset of class attributes and some are optional"""
@@ -139,7 +112,7 @@ class Filth(object):
         raise NotImplementedError("A generate() function has not been implemented for this Filth")
 
     def is_valid(self) -> bool:
-        return True
+        pass
 
 
 class MergedFilth(Filth):
@@ -159,49 +132,17 @@ class MergedFilth(Filth):
         """this updates the bounds, text and placeholder for the merged
         filth
         """
-        if self.end < other_filth.beg or other_filth.end < self.beg:
-            raise exceptions.FilthMergeError(
-                "a_filth goes from [%s, %s) and b_filth goes from [%s, %s)" % (
-                    self.beg, self.end, other_filth.beg, other_filth.end
-                ))
-
-        if self.document_name != other_filth.document_name:
-            raise exceptions.FilthMergeError(
-                "This MergedFilth is in document {}, but the Filth that is being merged is in another document {}"
-                "".format(self.document_name.__repr__(), other_filth.document_name.__repr__())
-            )
-
-        # get the text over lap correct
-        if self.beg < other_filth.beg:
-            first = self  # type: Filth
-            second = other_filth  # type: Filth
-        else:
-            second = self
-            first = other_filth
-        end_offset = second.end - first.end
-        if end_offset > 0:
-            self.text = first.text + second.text[-end_offset:]
-
-        # update the beg/end strings
-        self.beg = min(self.beg, other_filth.beg)
-        self.end = max(self.end, other_filth.end)
-        if self.end - self.beg != len(self.text):
-            raise exceptions.FilthMergeError("text length isn't consistent")
-
-        # update the placeholder
-        self.filths.append(other_filth)
-        self._placeholder = '+'.join([filth.type for filth in self.filths])
+        pass
 
     @property
     def placeholder(self):
-        return self._placeholder.upper()
+        pass
 
     def merge(self, other_filth: Filth) -> 'MergedFilth':
         """Be smart about merging filth in this case to avoid nesting merged
         filths.
         """
-        self._update_content(other_filth)
-        return self
+        pass
 
     def __repr__(self) -> str:
         return self._to_string(['filths'])

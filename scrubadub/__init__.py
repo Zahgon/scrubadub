@@ -33,8 +33,7 @@ def clean(text: str, locale: Optional[str] = None, **kwargs) -> str:
     :rtype: `str`
 
     """
-    scrubber = Scrubber(locale=locale)
-    return scrubber.clean(text, **kwargs)
+    pass
 
 
 def clean_documents(documents: Union[Sequence[str], Dict[Optional[str], str]], locale: Optional[str] = None, **kwargs
@@ -64,8 +63,7 @@ def clean_documents(documents: Union[Sequence[str], Dict[Optional[str], str]], l
     :return: Documents in the same format as input, but with `Filth` redacted
     :rtype: `list` of `str` objects, `dict` of `str` objects; same as input
     """
-    scrubber = Scrubber(locale=locale)
-    return scrubber.clean_documents(documents, **kwargs)
+    pass
 
 
 def list_filth(text: str, locale: Optional[str] = None, **kwargs) -> List[Filth]:
@@ -86,8 +84,7 @@ def list_filth(text: str, locale: Optional[str] = None, **kwargs) -> List[Filth]
     :rtype: `list` of :class:``Filth`` objects
 
     """
-    scrubber = Scrubber(locale=locale)
-    return list(scrubber.iter_filth(text, **kwargs))
+    pass
 
 
 def list_filth_documents(documents: Union[List[str], Dict[Optional[str], str]], locale: Optional[str] = None,
@@ -120,5 +117,4 @@ locale='en_US'>]
     :rtype: `list` of :class:``Filth`` objects
 
     """
-    scrubber = Scrubber(locale=locale)
-    return list(scrubber.iter_filth_documents(documents, **kwargs))
+    pass

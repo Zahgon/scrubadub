@@ -43,13 +43,4 @@ def remove_post_processor(post_processor: Union[Type['PostProcessor'], str]) -> 
     :param post_processor: The ``PostProcessor`` to register with the scrubadub post-processor configuration.
     :type post_processor: Union[Type['PostProcessor'], str]
     """
-    if isinstance(post_processor, str):
-        if post_processor in post_processor_catalogue:
-            catalogue._remove((*post_processor_catalogue.namespace, post_processor))
-
-    elif inspect.isclass(post_processor):
-        if post_processor.name in post_processor_catalogue:
-            catalogue._remove((*post_processor_catalogue.namespace, post_processor.name))
-
-    else:
-        raise ValueError("post-processor should be a class (not an instance) or a string.")
+    pass

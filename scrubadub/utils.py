@@ -15,9 +15,7 @@ class CanonicalStringSet(set):
     """
 
     def _cast_as_lower(self, x):
-        if not isinstance(x, basestring):
-            raise TypeError('CanonicalStringSet only works with strings')
-        return x.lower()
+        pass
 
     def __init__(self, *elements):
         super(CanonicalStringSet, self).__init__()
@@ -30,23 +28,16 @@ class CanonicalStringSet(set):
         )
 
     def add(self, element):
-        return super(CanonicalStringSet, self).add(
-            self._cast_as_lower(element)
-        )
+        pass
 
     def update(self, elements):
-        for element in elements:
-            self.add(element)
+        pass
 
     def remove(self, element):
-        return super(CanonicalStringSet, self).remove(
-            self._cast_as_lower(element)
-        )
+        pass
 
     def discard(self, element):
-        return super(CanonicalStringSet, self).discard(
-            self._cast_as_lower(element)
-        )
+        pass
 
 
 class Lookup(object):
@@ -74,10 +65,7 @@ def locale_transform(locale: str) -> str:
     :return: The normalised locale string
     :rtype: str
     """
-    normalised = locale_module.normalize(locale.lower())
-    if normalised not in locale_module.locale_alias.values():
-        raise ValueError("Unknown locale '{}', not in locale.locale_alias".format(locale))
-    return normalised
+    pass
 
 
 def locale_split(locale: str) -> Tuple[Optional[str], Optional[str]]:
@@ -89,22 +77,9 @@ def locale_split(locale: str) -> Tuple[Optional[str], Optional[str]]:
     :return: The two-letter language code and the two-letter region code in a tuple.
     :rtype: tuple, (str, str)
     """
-    locale = locale_transform(locale)
-
-    regex = r'(?P<language>[0-9a-zA-Z]+)(_(?P<region>[0-9a-zA-Z]+))?' \
-            r'(\.(?P<charset>[0-9a-zA-Z-]+)(@(?P<charset2>[0-9a-zA-Z]+))?)?'
-    match = re.match(regex, locale)
-    if match is None:
-        raise ValueError('Locale does not match expected format.')
-
-    return match.group('language').lower(), match.group('region').upper()
+    pass
 
 
 class ToStringMixin(object):
     def _to_string(self, attributes: List[str]) -> str:
-        item_attributes = [
-            "{}={}".format(item, getattr(self, item, None).__repr__())
-            for item in attributes
-            if getattr(self, item, None) is not None
-        ]
-        return "<{} {}>".format(self.__class__.__name__, " ".join(item_attributes))
+        pass

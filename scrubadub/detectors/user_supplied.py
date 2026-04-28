@@ -59,29 +59,4 @@ class UserSuppliedFilthDetector(TaggedEvaluationFilthDetector):
             self, start_location: int, end_location: int, text: str, comparison_type: Optional[str],
             detector_name: str, document_name: Optional[str], locale: str
     ) -> Filth:
-        for item_name in dir(filth_module):
-            try:
-                filth_cls = filth_module.__getattribute__(item_name)
-            except AttributeError:
-                continue
-
-            if not isinstance(filth_cls, type) or not issubclass(filth_cls, Filth):
-                continue
-
-            try:
-                filth_type = filth_cls.type
-            except AttributeError:
-                continue
-
-            if filth_type != comparison_type:
-                continue
-
-            return filth_cls(
-                start_location,
-                end_location,
-                text,
-                detector_name=detector_name,
-                document_name=document_name,
-                locale=locale,
-            )
-        raise KeyError(f"Unable to find filth '{comparison_type}'")
+        pass

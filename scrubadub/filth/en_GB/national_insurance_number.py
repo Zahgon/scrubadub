@@ -15,4 +15,4 @@ class NationalInsuranceNumberFilth(Filth):
         :return: An example of this ``Filth``
         :rtype: str
         """
-        return faker.ssn()
+        pass

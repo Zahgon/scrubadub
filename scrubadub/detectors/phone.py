@@ -31,16 +31,7 @@ class PhoneDetector(Detector):
         :return: An iterator to the discovered :class:`Filth`
         :rtype: Iterator[:class:`Filth`]
         """
-        # create a copy of text to handle multiple phone numbers correctly
-        for match in phonenumbers.PhoneNumberMatcher(text, self.region):
-            yield PhoneFilth(
-                beg=match.start,
-                end=match.end,
-                text=match.raw_string,
-                detector_name=self.name,
-                document_name=document_name,
-                locale=self.locale,
-            )
+        pass
 
     @classmethod
     def supported_locale(cls, locale: str) -> bool:
@@ -52,4 +43,4 @@ class PhoneDetector(Detector):
         :return: ``True`` if the locale is supported, otherwise ``False``
         :rtype: bool
         """
-        return True
+        pass

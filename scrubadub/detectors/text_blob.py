@@ -36,30 +36,7 @@ class TextBlobNameDetector(RegexDetector):
         :return: An iterator to the discovered :class:`Filth`
         :rtype: Iterator[:class:`Filth`]
         """
-
-        if not isinstance(self.disallowed_nouns, CanonicalStringSet):
-            raise TypeError(
-                'NameDetector.disallowed_nouns must be CanonicalStringSet'
-            )
-
-        # find the set of proper nouns using textblob.
-        proper_nouns = set()
-        blob = textblob.TextBlob(text)
-        for word, part_of_speech in blob.tags:
-            is_proper_noun = part_of_speech in ("NNP", "NNPS")
-            if is_proper_noun and word.lower() not in self.disallowed_nouns:
-                proper_nouns.add(word)
-
-        # use a regex to replace the proper nouns by first escaping any
-        # lingering punctuation in the regex
-        # http://stackoverflow.com/a/4202559/564709
-        if proper_nouns:
-            re_list = []
-            for proper_noun in proper_nouns:
-                re_list.append(r'\b' + re.escape(str(proper_noun)) + r'\b')
-            self.regex = re.compile('|'.join(re_list))
-            yield from super(TextBlobNameDetector, self).iter_filth(text, document_name=document_name)
-        return
+        pass
 
     @classmethod
     def supported_locale(cls, locale: str) -> bool:
@@ -71,8 +48,4 @@ class TextBlobNameDetector(RegexDetector):
         :return: ``True`` if the locale is supported, otherwise ``False``
         :rtype: bool
         """
-        language, region = cls.locale_split(locale)
-
-        # fr and de are possible through plugins, but need to be implemented on this end
-        # https://github.com/sloria/textblob-fr and https://github.com/markuskiller/textblob-de
-        return language in ['en', ]
+        pass

@@ -124,23 +124,7 @@ class RegexDetector(Detector):
         :return: An iterator to the discovered :class:`Filth`
         :rtype: Iterator[:class:`Filth`]
         """
-        if not issubclass(self.filth_cls, Filth):
-            raise TypeError(
-                'filth_cls attribute of {} needs to be set to a subclass of the Filth class.'.format(self.__class__)
-            )
-
-        # Allow the regex to be in the detector as well  as the filth class
-        if self.regex is None:
-            warnings.warn('regex should be defined in the Detector and not in the Filth class', DeprecationWarning)
-            if self.filth_cls.regex is not None:
-                self.regex = self.filth_cls.regex
-
-        if self.regex is None:
-            raise ValueError('No regular expression has been specified for {}.'.format(self.__class__))
-
-        for match in self.regex.finditer(text):
-            yield self.filth_cls(match=match, detector_name=self.name, document_name=document_name,
-                                 locale=self.locale)
+        pass
 
 
 class RegionLocalisedRegexDetector(RegexDetector):
@@ -176,5 +160,4 @@ class RegionLocalisedRegexDetector(RegexDetector):
         :return: ``True`` if the locale is supported, otherwise ``False``
         :rtype: bool
         """
-        language, region = cls.locale_split(locale)
-        return region in cls.region_regex.keys()
+        pass

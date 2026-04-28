@@ -30,15 +30,7 @@ def register_detector(detector: Type['Detector'], *, autoload: Optional[bool] = 
     :param autoload: Whether to automatically load this ``Detector`` on ``Scrubber`` initialisation.
     :type autoload: Optional[bool]
     """
-    if not inspect.isclass(detector):
-        raise ValueError("detector should be a class, not an instance.")
-
-    if autoload is not None:
-        detector.autoload = autoload
-
-    detector_catalogue.register(detector.name, func=detector)
-
-    return detector
+    pass
 
 
 def remove_detector(detector: Union[Type['Detector'], str]):
@@ -58,13 +50,4 @@ def remove_detector(detector: Union[Type['Detector'], str]):
     :param autoload: Whether to automatically load this ``Detector`` on ``Scrubber`` initialisation.
     :type autoload: bool
     """
-    if isinstance(detector, str):
-        if detector in detector_catalogue:
-            catalogue._remove((*detector_catalogue.namespace, detector))
-
-    elif inspect.isclass(detector):
-        if detector.name in detector_catalogue:
-            catalogue._remove((*detector_catalogue.namespace, detector.name))
-
-    else:
-        raise ValueError("detector should be a class (not an instance) or a string.")
+    pass

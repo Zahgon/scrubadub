@@ -28,9 +28,7 @@ class FilthRemover(PostProcessor):
         :return: The processed filths
         :rtype: Sequence[Filth]
         """
-        for filth_item in filth_list:
-            filth_item.replacement_string = ''
-        return filth_list
+        pass
 
 
 register_post_processor(FilthRemover)

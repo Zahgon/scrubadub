@@ -17,4 +17,4 @@ class TwitterFilth(Filth):
         :return: An example of this ``Filth``
         :rtype: str
         """
-        return '@' + re.sub(r'[^a-zA-Z0-9_]', '', faker.user_name())[:15]
+        pass

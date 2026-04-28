@@ -15,4 +15,4 @@ class NameFilth(Filth):
         :return: An example of this ``Filth``
         :rtype: str
         """
-        return faker.name()
+        pass

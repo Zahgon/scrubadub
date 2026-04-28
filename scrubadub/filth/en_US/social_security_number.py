@@ -16,11 +16,7 @@ class SocialSecurityNumberFilth(Filth):
         :return: An example of this ``Filth``
         :rtype: str
         """
-        ssn = ''
-        if faker.locales == ['en_US']:
-            while not stdnum.us.ssn.is_valid(ssn):
-                ssn = faker.ssn()
-        return faker.ssn()
+        pass
 
     def is_valid(self) -> bool:
-        return stdnum.us.ssn.is_valid(''.join(char for char in self.text if char not in '. -'))
+        pass

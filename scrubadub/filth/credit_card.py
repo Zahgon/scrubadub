@@ -17,7 +17,7 @@ class CreditCardFilth(Filth):
         :return: An example of this ``Filth``
         :rtype: str
         """
-        return faker.credit_card_number()
+        pass
 
     def is_valid(self) -> bool:
-        return stdnum.luhn.is_valid(''.join(char for char in self.text if char in string.digits))
+        pass

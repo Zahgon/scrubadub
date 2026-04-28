@@ -15,4 +15,4 @@ class LocationFilth(Filth):
         :return: An example of this ``Filth``
         :rtype: str
         """
-        return faker.city()
+        pass

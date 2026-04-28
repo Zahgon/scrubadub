@@ -50,6 +50,4 @@ class EmailDetector(RegexDetector):
         :return: An iterator to the discovered :class:`Filth`
         :rtype: Iterator[:class:`Filth`]
         """
-
-        if re.search(self.at_matcher, text) and re.search(self.dot_matcher, text):
-            yield from super().iter_filth(text=text, document_name=document_name)
+        pass

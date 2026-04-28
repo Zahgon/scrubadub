@@ -15,9 +15,7 @@ class UrlFilth(Filth):
 
     @property
     def placeholder(self):
-        if self.keep_domain:
-            return self.match.group('domain') + self.url_placeholder
-        return self.url_placeholder
+        pass
 
     @staticmethod
     def generate(faker: Faker) -> str:
@@ -28,4 +26,4 @@ class UrlFilth(Filth):
         :return: An example of this ``Filth``
         :rtype: str
         """
-        return faker.url()
+        pass

@@ -15,4 +15,4 @@ class VehicleLicencePlateFilth(Filth):
         :return: An example of this ``Filth``
         :rtype: str
         """
-        return faker.license_plate()
+        pass

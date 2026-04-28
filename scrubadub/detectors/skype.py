@@ -55,46 +55,4 @@ class SkypeDetector(RegexDetector):
         :return: An iterator to the discovered :class:`Filth`
         :rtype: Iterator[:class:`Filth`]
         """
-
-        # find 'skype' in the text using a customized tokenizer. this makes
-        # sure that all valid skype usernames are kept as tokens and not split
-        # into different words
-        tokenizer = nltk.tokenize.regexp.RegexpTokenizer(
-            self.SKYPE_TOKEN
-        )
-        blob = textblob.TextBlob(text, tokenizer=tokenizer)
-        skype_indices, tokens = [], []
-        for i, token in enumerate(blob.tokens):
-            tokens.append(token)
-            if 'skype' in token.lower():
-                skype_indices.append(i)
-
-        # go through the words before and after skype words to identify
-        # potential skype usernames.
-        skype_usernames = []
-        for i in skype_indices:
-            jmin = max(i-self.word_radius, 0)
-            jmax = min(i+self.word_radius+1, len(tokens))
-            for j in list(range(jmin, i)) + list(range(i+1, jmax)):
-                token = tokens[j]
-                if self.SKYPE_USERNAME.match(token):
-
-                    # this token is a valid skype username. Most skype
-                    # usernames appear to be misspelled words. Word.spellcheck
-                    # does not handle the situation of an all caps word very
-                    # well, so we cast these to all lower case before checking
-                    # whether the word is misspelled
-                    if token.isupper():
-                        token = token.lower()
-                    word = textblob.Word(token)
-                    suggestions = word.spellcheck()
-                    corrected_word, score = suggestions[0]
-                    if score < 0.5:
-                        skype_usernames.append(token)
-
-        # replace all skype usernames
-        if skype_usernames:
-            self.regex = re.compile('|'.join(skype_usernames))
-            yield from super(SkypeDetector, self).iter_filth(text, document_name=document_name)
-
-        return
+        pass

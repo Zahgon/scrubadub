@@ -141,26 +141,13 @@ class TaggedEvaluationFilthDetector(Detector):
     def dedup_dicts(known_filth_items: List[KnownFilthItem]) -> List[KnownFilthItem]:
         # It would be nicer to do this with a set, but sets and dictionaries dont work well together, plus this way
         # we get to keep the typing info associated to these dicts.
-        deduped = []  # type: List[KnownFilthItem]
-        for item in known_filth_items:
-            if item not in deduped:
-                deduped.append(item)
-
-        return deduped
+        pass
 
     def create_filth(
             self, start_location: int, end_location: int, text: str, comparison_type: Optional[str],
             detector_name: str, document_name: Optional[str], locale: str
     ) -> Filth:
-        return TaggedEvaluationFilth(
-            start_location,
-            end_location,
-            text,
-            comparison_type=comparison_type,
-            detector_name=detector_name,
-            document_name=document_name,
-            locale=locale,
-        )
+        pass
 
     def _find_all(
             self,
@@ -173,32 +160,7 @@ class TaggedEvaluationFilthDetector(Detector):
             ignore_partial_word_matches: bool = False,
     ) -> Generator[Filth, None, None]:
         """Yield filth for each match to substr in text."""
-
-        text_orig = copy.copy(text)
-        if ignore_case:
-            text = text.lower()
-            substr = substr.lower()
-
-        if ignore_whitespace:
-            # We change any white space in the original with "\s+" that has to match one or more whitespace chars
-            substr = '\\s+'.join([re.escape(token) for token in substr.split()])
-        else:
-            substr = re.escape(substr)
-
-        if ignore_partial_word_matches:
-            substr = f"\\b{substr}\\b"
-
-        matches = re.finditer(substr, text, re.MULTILINE | re.DOTALL)
-        for match in matches:
-            yield self.create_filth(
-                match.span()[0],
-                match.span()[1],
-                text_orig[match.span()[0]:match.span()[1]],
-                comparison_type=comparison_type,
-                detector_name=self.name,
-                document_name=document_name,
-                locale=self.locale,
-            )
+        pass
 
     def _find_all_between(
             self,
@@ -216,35 +178,7 @@ class TaggedEvaluationFilthDetector(Detector):
         substr_start and substr_end, but only if the text
         between the two is less than limit characters.
         """
-        text_orig = copy.copy(text)
-        if ignore_case:
-            text = text.lower()
-            substr_start = substr_start.lower()
-            substr_end = substr_end.lower()
-
-        if ignore_whitespace:
-            # We change any white space in the original with "\s+" that has to match one or more whitespace chars
-            substr_start = '\\s+'.join([re.escape(token) for token in substr_start.split()])
-            substr_end = '\\s+'.join([re.escape(token) for token in substr_end.split()])
-        else:
-            substr_start = re.escape(substr_start)
-            substr_end = re.escape(substr_end)
-
-        if ignore_partial_word_matches:
-            substr_start = f"\\b{substr_start}\\b"
-            substr_end = f"\\b{substr_end}\\b"
-
-        matches = re.finditer(f"({substr_start})(.{{0,{limit}}})({substr_end})", text, re.MULTILINE | re.DOTALL)
-        for match in matches:
-            yield self.create_filth(
-                match.span()[0],
-                match.span()[1],
-                text_orig[match.span()[0]:match.span()[1]],
-                comparison_type=comparison_type,
-                detector_name=self.name,
-                document_name=document_name,
-                locale=self.locale,
-            )
+        pass
 
     def iter_filth(
             self,
@@ -260,36 +194,4 @@ class TaggedEvaluationFilthDetector(Detector):
         :return: An iterator to the discovered :class:`Filth`
         :rtype: Iterator[:class:`Filth`]
         """
-        for pii_item in self._known_filth_items:
-            # could also implement other types in here too
-            ignore_case = pii_item.get('ignore_case', False)
-            ignore_whitespace = pii_item.get('ignore_whitespace', False)
-            ignore_partial_word_matches = pii_item.get('ignore_partial_word_matches', False)
-            if 'match' in pii_item and 'match_end' in pii_item and pii_item['match_end'] is not None \
-                    and len(pii_item['match_end']) > 0:
-                yield from self._find_all_between(
-                        text,
-                        pii_item['match'],
-                        pii_item['match_end'],
-                        limit=int(pii_item.get('limit', 150) or 150),
-                        comparison_type=pii_item.get('filth_type', None),
-                        document_name=document_name,
-                        ignore_case=ignore_case,
-                        ignore_whitespace=ignore_whitespace,
-                        ignore_partial_word_matches=ignore_partial_word_matches,
-                )
-            elif 'match' in pii_item:
-                yield from self._find_all(
-                        text,
-                        pii_item['match'],
-                        comparison_type=pii_item.get('filth_type', None),
-                        document_name=document_name,
-                        ignore_case=ignore_case,
-                        ignore_whitespace=ignore_whitespace,
-                        ignore_partial_word_matches=ignore_partial_word_matches,
-                )
-            else:
-                raise ValueError(
-                    "Unknown keys in predefined PII item: "
-                    "{}".format(pii_item.keys())
-                )
+        pass
